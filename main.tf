@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "main" {
-  count = var.web_subnet
+  count = length(var.web_subnet)
   vpc_id     = aws_vpc.main.id
   cidr_block = element(var.web_subnet, count.index )
 
