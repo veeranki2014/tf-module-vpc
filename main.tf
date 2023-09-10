@@ -19,3 +19,7 @@ resource "aws_vpc" "main" {
 #  tags   = var.tags
 #  az     = var.az
 #}
+
+output "test3"{
+  default = "3"
+}
