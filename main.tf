@@ -17,7 +17,7 @@ resource "aws_subnet" "main" {
   },
     var.tags )
 }
-}
+
 
 
 
