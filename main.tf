@@ -8,18 +8,15 @@ resource "aws_vpc" "main" {
 }
 
 
-#module "subnets" {
-#  source = "./subnets"
-#
-#  for_each = var.subnets
-#  cidr_block = each.value["subnets"]
-#  subnet_name = each.key
-#  vpc_id      = aws_vpc.main.id
-#  env    = var.env
-#  tags   = var.tags
-#  az     = var.az
-#}
+module "subnets" {
+  source = "./subnets"
 
-output "test3"{
-  default = "3"
+  for_each = var.subnets
+  cidr_block = each.value["subnets"]
+  subnet_name = each.key
+  vpc_id      = aws_vpc.main.id
+  env    = var.env
+  tags   = var.tags
+  #az     = var.az
 }
+
