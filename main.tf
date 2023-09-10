@@ -1,19 +1,19 @@
 resource "aws_vpc" "main" {
-  cidr_block = var.cidr_block
+  cidr_block        = var.cidr_block
 
-  tags = merge ({
-    Name = "${var.env}-vpc"
+  tags              = merge ({
+    Name            = "${var.env}-vpc"
   },
     var.tags )
 }
 
 resource "aws_subnet" "main" {
-  count = length(var.web_subnet)
-  vpc_id     = aws_vpc.main.id
-  cidr_block = element(var.web_subnet, count.index )
+  count             = length(var.web_subnet)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = element(var.web_subnet, count.index )
 
-  tags = merge ({
-    Name = "${var.env}-subnet"
+  tags              = merge ({
+    Name            = "${var.env}-subnet"
   },
     var.tags )
 }
