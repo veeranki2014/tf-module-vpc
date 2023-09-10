@@ -8,13 +8,14 @@ resource "aws_vpc" "main" {
 }
 
 
-resource "aws_subnet" "main" {
-  count      = length(var.web_subnet_cidr_block)
-  vpc_id     = aws_vpc.main.id
-  cidr_block = element(var.web_subnet_cidr_block, count.index )
+module "subnets" {
+  source = "./subnets"
 
-  tags = merge ({
-    Name = "${var.env}-web-subnet"
-  },
-    var.tags )
+  for_each = var.subnets
+  cidr_block = each.value["cidr_block"]
+  subnet_name = each.key
+  vpc_id      = aws_vpc.main.id
+  env    = var.env
+  tags   = var.tags
+  az     = var.az
 }
