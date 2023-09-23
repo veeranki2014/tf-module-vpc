@@ -27,6 +27,16 @@ resource "aws_vpc_peering_connection" "peer" {
   auto_accept   = true
 }
 
+##Internet gateway( one VPC one internet gateway)
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+
+  tags              = merge ({
+    Name            = "${var.env}-igw"
+  },
+    var.tags )
+}
+
 
 
 
