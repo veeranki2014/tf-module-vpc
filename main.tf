@@ -66,6 +66,16 @@ resource "aws_nat_gateway" "ngw" {
   depends_on = [aws_internet_gateway.igw]
 }
 
+resource "aws_route" "route_ngw" {
+  count                     = length(local.private_route_table_ids)
+  route_table_id            = element(local.private_route_table_ids, count.index )
+  destination_cidr_block    = "0.0.0.0/0"
+  #gateway_id                = aws_internet_gateway.igw.id
+  nat_gateway_id            = aws_nat_gateway.ngw.id
+  #vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  #depends_on                = [aws_route_table.table]
+}
+
 
 
 
