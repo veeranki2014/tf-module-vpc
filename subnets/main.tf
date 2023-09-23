@@ -11,11 +11,11 @@ resource "aws_subnet" "main" {
 }
 
 ##Route table one for each subnet
-resource "aws_route_table" "example" {
+resource "aws_route_table" "table" {
   vpc_id = var.vpc_id
 
   tags = merge ({
-    Name = "${var.env}-${var.subnet_name}-table"
+    Name = "${var.env}-${var.subnet_name}"
   },
     var.tags )
 }

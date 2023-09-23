@@ -28,13 +28,22 @@ resource "aws_vpc_peering_connection" "peer" {
 }
 
 ##Internet gateway( one VPC one internet gateway)
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags              = merge ({
     Name            = "${var.env}-igw"
   },
     var.tags )
+}
+
+##route for internet gateways
+resource "aws_route" "route_igw" {
+  route_table_id            = module.subnets["public"].route_table_ids
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id                = aws_internet_gateway.igw.id
+  #vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  #depends_on                = [aws_route_table.table]
 }
 
 
